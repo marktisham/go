@@ -2,8 +2,6 @@ package main
 
 // See https://tour.golang.org/list
 
-import ()
-
 func main() {
 	/*
 		PlayWithArrays()
@@ -13,7 +11,8 @@ func main() {
 	*/
 	//PlayWithGoRoutines()
 	//PlayWithChannels()
-	BufferChannels()
+	//BufferChannels()
+	TreeStuff()
 
 	// Continue here: https://tour.golang.org
 	// go builder:
@@ -21,4 +20,7 @@ func main() {
 	// go build
 	// or
 	// go hello.go goroutines.go
+
+	// to import an external lib you need to run
+	// go get
 }

@@ -64,15 +64,20 @@ func PushChannel(ch chan int) {
 }
 
 func PopChannel(ch chan int) {
-	for {
-		i, ok := <-ch
-		if ok == false {
-			fmt.Printf("channel closed")
-			return
-		}
+	/*
+		for {
+			i, ok := <-ch
+			if ok == false {
+				fmt.Printf("channel closed")
+				return
+			}
+	*/
+	// better way:
+	for i := range ch {
 		fmt.Printf("Pulled off %d\n", i)
 		time.Sleep(1000 * time.Millisecond)
 	}
+	fmt.Println("exiting")
 }
 
 func BufferChannels() {
