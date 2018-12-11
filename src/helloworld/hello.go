@@ -2,6 +2,17 @@ package main
 
 // See https://tour.golang.org/list
 
+import (
+	"fmt"
+	"golang.org/x/tour/tree"
+)
+
+func TreeStuff2() {
+	t := tree.New(1)
+	fmt.Println(t.Value)
+	// https://tour.golang.org/concurrency/8
+}
+
 func main() {
 	/*
 		PlayWithArrays()
@@ -12,7 +23,7 @@ func main() {
 	//PlayWithGoRoutines()
 	//PlayWithChannels()
 	//BufferChannels()
-	TreeStuff()
+	TreeStuff2()
 
 	// Continue here: https://tour.golang.org
 	// go builder:
