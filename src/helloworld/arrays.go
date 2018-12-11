@@ -1,8 +1,7 @@
-
 package main
 
 import (
-"fmt"
+	"fmt"
 )
 
 // Array Fun
@@ -15,9 +14,9 @@ func PlayWithArrays() {
 	fmt.Printf("\nArrays!\n")
 	var myslice []int
 	printSlice(myslice)
-	myslice=append(myslice,123)
+	myslice = append(myslice, 123)
 	printSlice(myslice)
-	myslice=append(myslice,12345)
+	myslice = append(myslice, 12345)
 	printSlice(myslice)
 
 	fmt.Printf("\nOutputing the array\n")
