@@ -23,7 +23,7 @@ func main() {
 	//PlayWithGoRoutines()
 	//PlayWithChannels()
 	//BufferChannels()
-	TreeStuff2()
+	TreeStuff()
 
 	// Continue here: https://tour.golang.org
 	// go builder:
