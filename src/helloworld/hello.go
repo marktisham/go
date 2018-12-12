@@ -14,24 +14,22 @@ func TreeStuff2() {
 }
 
 func main() {
-	/*
-		PlayWithArrays()
-		PlayWithStructs()
-		PlayWithMaps()
-		UseAnInterace()
-	*/
+	//PlayWithArrays()
+	//PlayWithStructs()
+	//PlayWithMaps()
+	//UseAnInterace()
 	//PlayWithGoRoutines()
 	//PlayWithChannels()
 	//BufferChannels()
-	TreeStuff()
+	//EquivTrees()
+	BuildTree()
 
-	// Continue here: https://tour.golang.org
-	// go builder:
-	// cmd-9
+	// https://tour.golang.org
 	// go build
-	// or
+	// or run specific files:
 	// go hello.go goroutines.go
+	// go fmt = reformat all code
 
-	// to import an external lib you need to run
+	// to import an external lib you need to run this first:
 	// go get
 }
