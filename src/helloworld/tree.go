@@ -70,7 +70,7 @@ type MyTree struct {
 
 func BuildTree() {
 	// Arbitrary unsorted array
-	a := []int{224, 35, 4, 66, 31, 11, 31, 22, 18, 99, 18, 222, 123, 43, 12, 44}
+	a := []int{224, 35, 4, 66, 31, 11, 31, 22, -5, 1201, 18, 99, 18, 222, 123, 43, 12, 44}
 
 	fmt.Printf("Original:\n")
 	var root *MyTree
@@ -84,8 +84,28 @@ func BuildTree() {
 		}
 	}
 
-	fmt.Printf("\nInOrder:\n")
-	TreeInOrder(root)
+	ch := make(chan int)
+	go TreeInOrder(root, ch)
+
+	var vals []int
+	for val := range ch {
+		vals = append(vals, val)
+	}
+
+	fmt.Printf("\nFrom channel:\n")
+	for _, v := range vals {
+		fmt.Printf("%d,", v)
+	}
+	fmt.Printf("\nReversed:\n")
+	for i := len(vals) - 1; i >= 0; i-- {
+		fmt.Printf("%d,", vals[i])
+	}
+
+	const largestN int = 5
+	fmt.Printf("\nLargest %d:\n", largestN)
+	for i := len(vals) - 1; i >= len(vals)-1-largestN; i-- {
+		fmt.Printf("%d,", vals[i])
+	}
 }
 
 func InsertTree(parent *MyTree, val int) *MyTree {
@@ -107,11 +127,19 @@ func InsertTree(parent *MyTree, val int) *MyTree {
 	}
 }
 
-func TreeInOrder(parent *MyTree) {
+func TreeInOrder(parent *MyTree, ch chan int) {
+	_TreeInOrder(parent, ch)
+	close(ch)
+}
+
+func _TreeInOrder(parent *MyTree, ch chan int) {
 	if parent == nil {
 		return
 	}
-	TreeInOrder(parent.left)
-	fmt.Printf("%d,", parent.val)
-	TreeInOrder(parent.right)
+	_TreeInOrder(parent.left, ch)
+
+	ch <- parent.val
+
+	_TreeInOrder(parent.right, ch)
+
 }

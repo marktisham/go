@@ -2,27 +2,18 @@ package main
 
 // See https://tour.golang.org/list
 
-import (
-	"fmt"
-	"golang.org/x/tour/tree"
-)
-
-func TreeStuff2() {
-	t := tree.New(1)
-	fmt.Println(t.Value)
-	// https://tour.golang.org/concurrency/8
-}
-
 func main() {
 	//PlayWithArrays()
 	//PlayWithStructs()
-	//PlayWithMaps()
+	PlayWithMaps()
 	//UseAnInterace()
 	//PlayWithGoRoutines()
 	//PlayWithChannels()
 	//BufferChannels()
 	//EquivTrees()
-	BuildTree()
+	//BuildTree()
+
+	CountWords()
 
 	// https://tour.golang.org
 	// go build
