@@ -50,7 +50,7 @@ func EquivTrees() {
 	// See https://gist.github.com/zyxar/2317744
 
 	t1 := tree.New(2)
-	t2 := tree.New(10)
+	t2 := tree.New(2)
 	if Same(t1, t2) == true {
 		fmt.Println("SAME!")
 	} else {

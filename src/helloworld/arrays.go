@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
 // Array Fun
@@ -23,4 +24,36 @@ func PlayWithArrays() {
 	for i, v := range myslice {
 		fmt.Printf("index %d = %d\n", i, v)
 	}
+}
+
+func DeleteRecurringChars(str string) string {
+	fmt.Println(str)
+	var lookup = make(map[uint8]bool)
+	var result = ""
+	for i := 0; i < len(str); i++ {
+		c := str[i]
+		if lookup[c] == false {
+			result += string(c)
+			lookup[c] = true
+		}
+	}
+
+	return result
+}
+
+func SortAndSearch() {
+	a := []int{12, 222, 23, 11, 121}
+	for _, v := range a {
+		fmt.Printf("%d,", v)
+	}
+	fmt.Println()
+
+	sort.Ints(a)
+	for _, v := range a {
+		fmt.Printf("%d,", v)
+	}
+	fmt.Println()
+
+	res := sort.SearchInts(a, 121)
+	fmt.Println(res)
 }

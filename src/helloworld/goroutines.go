@@ -10,6 +10,8 @@ import (
 // Go routines and wait groups
 
 func Progression(start int, multiplier int, wg *sync.WaitGroup) {
+	defer wg.Done()
+
 	maxLoops := 10
 	val := start
 	prefix := "Progression (" + strconv.Itoa(start) + "," + strconv.Itoa(multiplier) + ") "
@@ -19,7 +21,6 @@ func Progression(start int, multiplier int, wg *sync.WaitGroup) {
 		val *= multiplier
 		time.Sleep(250 * time.Millisecond)
 	}
-	wg.Done()
 }
 
 func PlayWithGoRoutines() {
@@ -48,6 +49,23 @@ func PlayWithChannels() {
 	fmt.Printf("Waiting on channel response\n")
 	stres := <-chresult
 	fmt.Printf("\nBack from channel: " + stres + "\n")
+}
+
+func _PlayWithChanels2(ch chan int) {
+	//for i := range ch {
+	//	fmt.Printf("%d\n", i)
+	//}
+	ch <- 5
+}
+
+func PlayWithChannels2() {
+	ch := make(chan int)
+	go _PlayWithChanels2(ch)
+	//ch <- 5
+	i := <-ch
+	close(ch)
+	i = <-ch
+	fmt.Printf("%d", i)
 }
 
 //

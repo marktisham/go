@@ -53,8 +53,8 @@ func UseAnInterace() {
 
 	// A struct that does not support the interface should fail build:
 	/*
-		s3:=AStructWithoutIntfc{12}
-		myintfc=s3	// this should fail
+		s3 := AStructWithoutIntfc{12}
+		myintfc = s3 // this should fail
 	*/
 }
 
