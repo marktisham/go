@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
@@ -17,6 +18,10 @@ type Banana struct {
 
 func GetBananas(w http.ResponseWriter, r *http.Request) {
 	var bananas []Banana
+	params := mux.Vars(r)
+	lc:=r.FormValue("lc")
+	notexist:=params["no"]	// returns as null
+	fmt.Printf("%s %s",lc, notexist)
 
 	b:=Banana{1,"green"}
 	bananas=append(bananas,b)
