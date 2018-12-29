@@ -8,7 +8,7 @@ module:testrunner
 
 
 GET     /                                       App.Index
-GET     /mine                                   App.Index
+GET     /mine                                   App.MyView
 
 
 # Ignore favicon requests

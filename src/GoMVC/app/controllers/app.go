@@ -12,3 +12,7 @@ func (c App) Index() revel.Result {
 	return c.Render()
 }
 
+
+func (c App) MyView() revel.Result {
+	return c.Render()
+}
