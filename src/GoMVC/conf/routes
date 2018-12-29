@@ -8,11 +8,7 @@ module:testrunner
 
 
 GET     /                                       App.Index
-<<<<<<< HEAD
-GET     /mine                                   App.MyView
-=======
 GET     /mine                                   MyStuff.MarkStuff
->>>>>>> hacking
 
 
 # Ignore favicon requests
