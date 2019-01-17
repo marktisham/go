@@ -6,6 +6,7 @@ import (
 	"text/scanner"
 )
 
+// Paragraph object
 type Paragraph struct {
 	text string
 }
