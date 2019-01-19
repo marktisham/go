@@ -6,59 +6,63 @@ import (
 	"net/http"
 )
 
-var version string
+var loadcount int
 
 func htmlBody(w http.ResponseWriter, r *http.Request) {
-	str := "<html><head><script src=\"script1.js\"></script></head><body><h1>Hello There</h1></body></html>"
-	fmt.Fprintf(w, str)
+	loadcount++
 
-	queryValues := r.URL.Query()
-	vqc := queryValues.Get("v")
-	if vqc != "" {
-		version = vqc
-	}
+	// This simulates the one-time include the customer would add to their head
+	// This include has short caching and injects an include to a bigger/longer
+	// cached include. This allows us to version bump without customer change.
+	str := "<html><head><script src=\"customerinclude.js\"></script></head><body><h1>Hello There</h1></body></html>"
+	fmt.Fprintf(w, str)
 }
 
-func script1(w http.ResponseWriter, r *http.Request) {
-	str := "console.log(\"script 1 loading...\");"
-	str += "//" + version + "\n"
+// This would be the super lightweight JS include the customer would
+// make. Little to no caching on this one, but it injects a bigger include
+// that would use caching.
+func customerInclude(w http.ResponseWriter, r *http.Request) {
+	str := "console.log(\"customer include loading...\");"
+	str += "console.log(\"loadcount=" + fmt.Sprintf("%d", loadcount) + "\");"
 	str += "var s=document.createElement(\"script\");"
 
-	if version == "3" {
-		str += "s.setAttribute(\"src\",\"script3.js\");"
+	// Simulate a cache busting version change, when # of loads reaches
+	// a level, bump to a new include
+	if loadcount >= 5 {
+		str += "s.setAttribute(\"src\",\"biginclude2.js\");"
 	} else {
-		str += "s.setAttribute(\"src\",\"script2.js\");"
+		str += "s.setAttribute(\"src\",\"biginclude1.js\");"
 	}
 
 	str += "var h=document.getElementsByTagName(\"head\");"
 	str += "h[0].appendChild(s);"
 
-	str += "console.log(\"script 1 loaded\");"
+	str += "console.log(\"customer include loaded\");"
 	//w.Header().Add("cache-control", "max-age=5")
 	fmt.Fprintf(w, str)
 }
 
-func script2(w http.ResponseWriter, r *http.Request) {
-	str := "console.log(\"script 2 loaded\");"
-
-	w.Header().Add("cache-control", "max-age=60")
+// This is the original "v1" large include that would be cached indefinitely
+func biginclude1(w http.ResponseWriter, r *http.Request) {
+	str := "console.log(\"big include 1 loaded\");"
+	w.Header().Add("cache-control", "max-age=6000")
 	fmt.Fprintf(w, str)
 }
 
-func script3(w http.ResponseWriter, r *http.Request) {
-	str := "console.log(\"script 3 loaded\");"
-
-	w.Header().Add("cache-control", "max-age=60")
+// And here's the "v2" large include that would later be pulled by the common include
+func biginclude2(w http.ResponseWriter, r *http.Request) {
+	str := "console.log(\"big include 2 loaded\");"
+	w.Header().Add("cache-control", "max-age=6000")
 	fmt.Fprintf(w, str)
 }
 
 func main() {
-	version = "1"
+	loadcount = 0
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", htmlBody)
-	mux.HandleFunc("/script1.js", script1)
-	mux.HandleFunc("/script2.js", script2)
-	mux.HandleFunc("/script3.js", script3)
+	mux.HandleFunc("/customerinclude.js", customerInclude)
+	mux.HandleFunc("/biginclude1.js", biginclude1)
+	mux.HandleFunc("/biginclude2.js", biginclude2)
 
 	log.Fatal(http.ListenAndServe(":8081", mux))
 }
